@@ -2,7 +2,8 @@
   "name": "alojarproyecto",
   "version": "1.0.0",
   "description": "\"# Backend-Escuela\"",
-  "main": "index.js",
+  "main": "./public/index.html",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/garciacarrera/Backend-Escuela/issues"
   },
-  "homepage": "https://github.com/garciacarrera/Backend-Escuela#readme"
+  "homepage": "https://github.com/garciacarrera/Backend-Escuela#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1"
+  }
 }
