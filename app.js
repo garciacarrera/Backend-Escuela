@@ -7,7 +7,7 @@ const app = express();
 
 
 
-app.use(express.static('public'));
+app.use(express.static('./src/public'));
 
 app.set('port', envs.PORT);
 
