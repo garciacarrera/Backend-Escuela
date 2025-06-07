@@ -23,6 +23,5 @@ export const envs = {
   DB_PORT: envsVar.DB_PORT,
   DB_HOST: envsVar.DB_HOST,
   DB_USER: envsVar.DB_USER,
-  DB_PASSWORD: envsVar.DB_PASSWORD,
   DATABASE: envsVar.DATABASE,
 };
