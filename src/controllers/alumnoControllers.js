@@ -58,6 +58,6 @@ const subirTarea = async (req, res) => {
 };
 
 export const alumnoController = {
-    
+    MateriasMatriculadas,
     subirTarea
 };

@@ -1,5 +1,5 @@
 "# git clone "URL"  
-"# git clone -b URL nombreRAMa " 
+"# git clone -b nombreRAMa " 
 "# git pull actualizar cambios en la rama actual "
 "# git branch nombredelaramanueva  "
 "# git checkout  " listado de ramas ya creadas 

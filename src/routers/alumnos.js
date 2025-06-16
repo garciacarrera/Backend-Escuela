@@ -4,4 +4,4 @@ const alumnoRouter = Router();
 
 alumnoRouter.post("/:alumnoId/tarea", alumnoController.subirTarea);
 
-export default alumnoRouter;
+export {alumnoRouter};
