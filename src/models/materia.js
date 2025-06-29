@@ -1,4 +1,4 @@
-const materia1 = {
+export const materia1 = {
     id:"1",
     nombre: "Matematica"
 }

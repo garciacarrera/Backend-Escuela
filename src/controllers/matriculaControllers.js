@@ -5,10 +5,10 @@ const getMatricula = async (req = request, res = response) => {
     try { 
         const connection = await getConnection();
         
-        // Corrección: solo necesitas el primer elemento del array
+        //Consulta para obtener las matriculas de la base de datos
         const [matriculas] = await connection.query('SELECT * FROM matricula');
 
-        // Imprimir profesores en la consola
+        // Imprimir matriculas
         console.log('Matriculas obtenidas:', matriculas);
 
         res.status(200).json({
@@ -26,4 +26,20 @@ const getMatricula = async (req = request, res = response) => {
     }
 }
 
-export const matriculaController = { getMatricula };
+//Funcion para crear una matricula en la base de datos
+const createMatricula = async (req = request, res = response) => {
+    //Desectructuracion de objeto
+    const { alumnoId , materiaId } = req.body
+    const connection = await getConnection()
+
+    //Recibimos respuesta de una consulta SQL mandada a la base de datos
+    const [alumno] = await connection.query(
+        'INSERTS INTO matricula(alumnoId,materiaId) VALUES (?,?)',
+        [ alumnoId,materiaId ]
+    ) ;
+
+    //Mensaje de exito
+    res.status(201).json({ok:true, alumno, msg:'Matricula creada con exito'})
+}
+
+export const matriculaController = { getMatricula, createMatricula };
