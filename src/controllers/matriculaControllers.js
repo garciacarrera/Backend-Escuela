@@ -29,6 +29,7 @@ const getMatricula = async (req = request, res = response) => {
 
 //Funcion para crear una matricula en la base de datos
 const createMatricula = async (req = request, res = response) => {
+    try{
     //Desectructuracion de objeto
     const { alumnoId , materiaId } = req.body
     const connection = await getConnection()
@@ -41,6 +42,14 @@ const createMatricula = async (req = request, res = response) => {
 
     //Mensaje de exito
     res.status(201).json({ok:true, result:alumno, msg:'Matricula creada con exito'})
+    } catch(error){
+        console.error('Error al crear matricula:', err);
+        res.status(500).json({
+            ok: false, 
+            error: err.message, 
+            msg: 'Error al crear matricula'
+        });
+    }
 }
 
 const deleteMatricula = async (req = request, res = response) =>{}
