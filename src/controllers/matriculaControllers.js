@@ -57,3 +57,4 @@ const deleteMatricula = async (req = request, res = response) =>{}
 const updateMatricula = async (req = request, res = response) => {}
 
 export const matriculaController = { getMatricula, createMatricula, updateMatricula, deleteMatricula };
+

@@ -6,13 +6,25 @@ import matriculaRoutes from './src/routers/matriculas.js';
 
 const app = express();
 
+import tareaRouter from './src/routers/tareas.js';
+import materiaRouter from './src/routers/materias.js';
 
 
+const app = express();
 
+app.use(express.json());
 app.use(express.static('./src/public'));
 
 app.use('/', matriculaRoutes);
+
 app.set('port', envs.PORT);
 
-app.get('/profesor', profesorController.getprofesor)
+// Rutas
+app.use("/", tareaRouter);
+app.use("/", materiaRouter);
+
+app.use((req, res, next) => {
+  res.status(404).json({ ok: false, msg: "Endpoint no encontrado" });
+});
+
 export default app;
