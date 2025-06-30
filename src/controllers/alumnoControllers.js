@@ -3,7 +3,7 @@ import { getConnection } from "../config/database.js";
 
 // Obtener todas las materias donde un alumno está matriculado
 const MateriasMatriculadas = async (req = request, res = response) => {
-    const alumnoId = req.user?.id || req.params.alumnoId || req.body.alumnoId;
+    const alumnoId = req.user?.id || req.params.alumnoId || req.query.alumnoId || req.body.alumnoId;
     try {
         const connection = await getConnection();
         const [materias] = await connection.query(
@@ -50,6 +50,7 @@ const subirTarea = async (req, res) => {
     await connection.query(
       "INSERT INTO Tarea (titulo, descripcion, fechaEntrega, alumnoId, materiaId) VALUES (?, ?, ?, ?, ?)",
       [titulo, descripcion, fechaEntrega, alumnoId, materiaId]
+      
     );
     res.status(201).json({ ok: true, msg: "Tarea subida correctamente" });
   } catch (err) {
