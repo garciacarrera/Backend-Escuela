@@ -1,6 +1,6 @@
 import express from 'express';
 import { envs } from './src/config/envs.js';
-import { profesorController } from './src/controllers/profesorControllers.js';
+
 import tareaRouter from './src/routers/tareas.js';
 import materiaRouter from './src/routers/materias.js';
 
@@ -12,7 +12,6 @@ app.use(express.static('./src/public'));
 app.set('port', envs.PORT);
 
 // Rutas
-app.get('/profesor', profesorController.getprofesor);
 app.use("/", tareaRouter);
 app.use("/", materiaRouter);
 

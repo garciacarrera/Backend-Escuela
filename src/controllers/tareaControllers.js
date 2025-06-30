@@ -47,5 +47,37 @@ const crearTarea = async (req, res) => {
         });
     }
 };
+const verEntregasDelProfesor = async (req, res) => {
+    try {
+        const profesorId = req.params.profesorId; // Debe venir por la URL
 
-export const tareaController = { crearTarea };
+        const connection = await getConnection();
+
+        const [entregas] = await connection.query(
+            `SELECT 
+    et.id AS entregaId,
+    t.id AS tareaId,
+    t.titulo,
+    u.id AS alumnoId,
+    u.nombre AS alumno,
+    et.fechaEntrega
+FROM entregatarea et
+JOIN tarea t ON et.tareaId = t.id
+JOIN materia m ON t.materiaId = m.id
+JOIN usuario u ON et.alumnoId = u.id
+WHERE m.profesorId = ?
+ORDER BY et.fechaEntrega DESC`,
+            [profesorId]
+        );
+
+        res.status(200).json({ ok: true, entregas });
+    } catch (err) {
+        res.status(500).json({
+            ok: false,
+            error: err.message,
+            msg: "Error al obtener entregas"
+        });
+    }
+};
+
+export const tareaController = { crearTarea, verEntregasDelProfesor };
