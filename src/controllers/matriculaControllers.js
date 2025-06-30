@@ -35,7 +35,7 @@ const createMatricula = async (req = request, res = response) => {
 
     //Recibimos respuesta de una consulta SQL mandada a la base de datos
     const [alumno] = await connection.query(
-        'INSERTS INTO matricula(alumnoId,materiaId) VALUES (?,?)',
+        'INSERT INTO matricula(alumnoId,materiaId) VALUES (?,?)',
         [ alumnoId,materiaId ]
     ) ;
 
@@ -43,4 +43,8 @@ const createMatricula = async (req = request, res = response) => {
     res.status(201).json({ok:true, result:alumno, msg:'Matricula creada con exito'})
 }
 
-export const matriculaController = { getMatricula, createMatricula };
+const deleteMatricula = async (req = request, res = response) =>{}
+
+const updateMatricula = async (req = request, res = response) => {}
+
+export const matriculaController = { getMatricula, createMatricula, updateMatricula, deleteMatricula };
