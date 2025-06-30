@@ -4,7 +4,7 @@ import { getConnection } from "../config/database.js";
 const getAlumnosPorMateria = async (req, res) => {
     try {
     
-        const { profesorId, materiaId } = req.body; 
+        const { profesorId, materiaId } = req.query; 
         // { profesorId: 1, materiaId 1}
         const connection = await getConnection();
 

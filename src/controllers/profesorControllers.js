@@ -1,9 +1,9 @@
 
 import { getConnection } from "../config/database.js";
-import express from "express"
+import { request, response } from "express";
 
 
-const getprofesor = async (req, res) => {
+const getprofesor = async (req=request, res=response) => {
     try {
         const connection = await getConnection();
 
@@ -11,7 +11,7 @@ const getprofesor = async (req, res) => {
         const [profesores] = await connection.query(
             "SELECT * FROM Usuario WHERE rol = 'profesor'"
         );
-
+        console.log("profesores", profesores)
         res.status(200).json({
             ok: true,
             result: profesores,
