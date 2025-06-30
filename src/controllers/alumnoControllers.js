@@ -3,7 +3,7 @@ import { getConnection } from "../config/database.js";
 
 // Obtener todas las materias donde un alumno está matriculado
 const MateriasMatriculadas = async (req = request, res = response) => {
-    const alumnoId = req.user?.id || req.params.alumnoId || req.query.alumnoId || req.body.alumnoId;
+    const alumnoId = req.params.alumnoId;
     try {
         const connection = await getConnection();
         const [materias] = await connection.query(
@@ -23,18 +23,28 @@ const MateriasMatriculadas = async (req = request, res = response) => {
     }
 };
 
-// Subir tarea SOLO si el alumno está matriculado en la materia
+// Subir entrega de tarea SOLO si el alumno está matriculado en la materia
 const subirTarea = async (req, res) => {
   const alumnoId = req.params.alumnoId; // El id del alumno viene por la URL
-  const { materiaId, titulo, descripcion, fechaEntrega } = req.body || {};
+  const { tareaId, fechaEntrega } = req.body || {};
 
   // Validación simple
-  if (!materiaId || !titulo || !descripcion || !fechaEntrega) {
-    return res.status(400).json({ ok: false, msg: "Faltan datos en el body (materiaId, titulo, descripcion, fechaEntrega)" });
+  if (!tareaId || !fechaEntrega) {
+    return res.status(400).json({ ok: false, msg: "Faltan datos en el body (tareaId, fechaEntrega)" });
   }
 
   try {
     const connection = await getConnection();
+
+    // Verifica que la tarea existe y a qué materia pertenece
+    const [tareaRows] = await connection.query(
+      "SELECT materiaId FROM Tarea WHERE id = ?",
+      [tareaId]
+    );
+    if (tareaRows.length === 0) {
+      return res.status(404).json({ ok: false, msg: "La tarea no existe" });
+    }
+    const materiaId = tareaRows[0].materiaId;
 
     // Verifica matrícula
     const [matricula] = await connection.query(
@@ -46,15 +56,14 @@ const subirTarea = async (req, res) => {
       return res.status(403).json({ ok: false, msg: "No estás matriculado en esta materia" });
     }
 
-    // Inserta la tarea
+    // Inserta la entrega de tarea
     await connection.query(
-      "INSERT INTO Tarea (titulo, descripcion, fechaEntrega, alumnoId, materiaId) VALUES (?, ?, ?, ?, ?)",
-      [titulo, descripcion, fechaEntrega, alumnoId, materiaId]
-      
+      "INSERT INTO entregatarea (tareaId, alumnoId, fechaEntrega) VALUES (?, ?, ?)",
+      [tareaId, alumnoId, fechaEntrega]
     );
-    res.status(201).json({ ok: true, msg: "Tarea subida correctamente" });
+    res.status(201).json({ ok: true, msg: "Entrega de tarea subida correctamente" });
   } catch (err) {
-    res.status(500).json({ ok: false, msg: "Error al subir tarea", error: err.message });
+    res.status(500).json({ ok: false, msg: "Error al subir entrega de tarea", error: err.message });
   }
 };
 
