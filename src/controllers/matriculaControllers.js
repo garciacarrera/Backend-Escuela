@@ -30,18 +30,22 @@ const getMatricula = async (req = request, res = response) => {
 //Funcion para crear una matricula en la base de datos
 const createMatricula = async (req = request, res = response) => {
     try{
-    //Desectructuracion de objeto
-    const { alumnoId , materiaId } = req.body
-    const connection = await getConnection()
+        //Desectructuracion de objeto
+        const { alumnoId , materiaId } = req.body
+        const connection = await getConnection()
 
-    //Recibimos respuesta de una consulta SQL mandada a la base de datos
-    const [alumno] = await connection.query(
-        'INSERT INTO matricula(alumnoId,materiaId) VALUES (?,?)',
-        [ alumnoId,materiaId ]
-    ) ;
+        //Recibimos respuesta de una consulta SQL mandada a la base de datos
+        const [alumno] = await connection.query(
+            'INSERT INTO matricula(alumnoId,materiaId) VALUES (?,?)',
+            [ alumnoId,materiaId ]
+        ) ;
 
-    //Mensaje de exito
-    res.status(201).json({ok:true, result:alumno, msg:'Matricula creada con exito'})
+        //Mensaje de exito
+        res.status(201).json({
+            ok:true,
+            result:alumno,
+            msg:'Matricula creada con exito'
+        })
     } catch(error){
         console.error('Error al crear matricula:', err);
         res.status(500).json({
