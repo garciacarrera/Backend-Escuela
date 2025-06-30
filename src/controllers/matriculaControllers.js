@@ -11,6 +11,7 @@ const getMatricula = async (req = request, res = response) => {
         // Imprimir matriculas
         console.log('Matriculas obtenidas:', matriculas);
 
+        //Mensaje de exito
         res.status(200).json({
             ok: true, 
             result: matriculas, 
@@ -39,7 +40,7 @@ const createMatricula = async (req = request, res = response) => {
     ) ;
 
     //Mensaje de exito
-    res.status(201).json({ok:true, alumno, msg:'Matricula creada con exito'})
+    res.status(201).json({ok:true, result:alumno, msg:'Matricula creada con exito'})
 }
 
 export const matriculaController = { getMatricula, createMatricula };
